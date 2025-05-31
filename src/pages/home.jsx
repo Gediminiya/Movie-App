@@ -28,10 +28,22 @@ function Home() {
 
     }, [])
 
-    const handleSearch = (e) => {
+    const handleSearch =async (e) => {
         e.preventDefault();
-        alert(searchQuery);
-        setSearchQuery("");
+        if (!searchQuery.trim()) return // trim removes leading and trailing characters
+        if (loading) return
+        setLoading(true)
+        try {
+            const searchResults = await searchMovies(searchQuery)
+            setMovies(searchResults)
+            seterror(null)
+        }
+         catch (err) {
+            console.log(err)
+            seterror("Failed to search movies...")
+        } finally {
+            setLoading(false)
+        }
     };
 
     return (
@@ -46,13 +58,18 @@ function Home() {
             />
             <button type="submit" className="search-button">Search</button>
         </form>
+
+        {error && <div className="error-message">{error}</div>}
+        {loading ? (
+            <div className="loading">Loading...</div>
+        ) : (
         <div className="movies-grid">
             {movies.map(
-                (movie) => 
-                    movie.title.toLowerCase().startsWith(searchQuery) && (
+                (movie) => (
                 <MovieCard movie={movie} key={movie.id} />
             ))}
         </div>
+        )}
     </div>
     );
 }

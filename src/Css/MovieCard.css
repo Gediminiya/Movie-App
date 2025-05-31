@@ -46,7 +46,7 @@
     opacity: 1;
 }
 
-.favorite-btn {
+.favourite-btn {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -63,11 +63,11 @@
     transition: background-color 0.2s;
 }
 
-.favorite-btn:hover {
+.favourite-btn:hover {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
-.favorite-btn.active {
+.favourite-btn.active {
     color: #ff4757;
 }
 
